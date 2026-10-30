@@ -7,11 +7,9 @@
 #include <X11/extensions/Xfixes.h>
 #include <X11/extensions/XInput2.h>
 
-// ---- настройки по умолчанию ----
-#define default_threshold  150      // суммарный путь мыши против барьера, px
-#define default_reset_ms   300      // пауза между ударами, после неё усилие обнуляется
+#define default_threshold  150      // the total path of the mouse against the barrier, px
+#define default_reset_ms   300      // pause between strokes, after which the force is reset
 #define default_direction  "both"   // both | right | left
-// --------------------------------
 
 static void print_help(FILE *out, const char *prog) {
     fprintf(out,
@@ -37,11 +35,11 @@ static void print_help(FILE *out, const char *prog) {
         prog, default_threshold, default_reset_ms, default_direction, prog);
 }
 
-// directions в XFixes - это куда барьер ПРОПУСКАЕТ, поэтому маска инвертирована
+// directions in XFixes
 static int direction_mask(const char *name) {
     if (!strcmp(name, "both"))  return 0;
-    if (!strcmp(name, "right")) return BarrierNegativeX;  // блок только вправо
-    if (!strcmp(name, "left"))  return BarrierPositiveX;  // блок только влево
+    if (!strcmp(name, "right")) return BarrierNegativeX;  // right only
+    if (!strcmp(name, "left"))  return BarrierPositiveX;  // left only
     return -1;
 }
 
